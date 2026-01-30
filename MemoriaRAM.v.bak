@@ -1,0 +1,30 @@
+// Quartus Prime Verilog Template
+// Simple Dual Port RAM with separate read/write addresses and
+// separate read/write clocks
+
+module MemoriaRAM
+#(parameter DATA_WIDTH=32, parameter ADDR_WIDTH=32)
+(
+	input [31:0] data, // tamanho do dado 32 bits
+	input [31:0] read_addr, write_addr, // endereco de leitura e escrita com 6 bits cada
+	input we, clock,
+	output reg [31:0] q // tamanho do dado de saida 32 bits
+);
+	
+	// Declare the RAM variable
+	reg [31:0] ram[1028:0]; // tamanho da ram, numero de posicoes 2 elevado ao tamanho do endereco, tamanho de cada posicao é o tamanho do dado 
+	always @ (posedge clock)
+	begin
+		// escreve
+		if (we)
+			ram[write_addr] <= data;
+		else
+		begin
+	
+		// le
+		q <= ram[read_addr];
+		
+		end
+	end
+	
+endmodule

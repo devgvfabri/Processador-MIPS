@@ -1,0 +1,10 @@
+module PC(clock, pc, proxima_inst);
+input clock;
+input wire[31:0] proxima_inst;
+output reg[31:0] pc;
+
+always @(posedge clock)
+begin
+pc = proxima_inst;
+end
+endmodule

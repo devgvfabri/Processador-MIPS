@@ -1,0 +1,41 @@
+module Soma_Endereco(novoEnderecoJ, novoEnderecoJR, Endbranch, clock, endereco, resetCPU, sinaisControle);
+input clock, resetCPU;
+input [2:0] sinaisControle;
+input [31:0] novoEnderecoJ, novoEnderecoJR, Endbranch;
+output reg[31:0] endereco;
+
+
+always@(posedge clock)
+begin
+	if(sinaisControle == 3'b000 ) // apenas pc + 1
+	begin
+		endereco =  endereco + 1;
+	end
+	if(sinaisControle == 3'b010) // jump
+	begin
+		endereco = endereco + 1;
+		endereco = {endereco[31:28], novoEnderecoJ};
+	end
+	if(sinaisControle == 3'b001) // jump register
+	begin
+		endereco = novoEnderecoJR;
+	end
+	if(sinaisControle == 3'b100) // branch
+	begin
+		endereco = endereco + 1;
+		endereco =  endereco + Endbranch;
+	end
+	if(resetCPU) // reset
+	begin
+		endereco = 0;
+	end
+	
+end
+
+
+
+
+
+
+
+endmodule

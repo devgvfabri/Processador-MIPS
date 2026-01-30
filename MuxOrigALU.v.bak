@@ -1,0 +1,15 @@
+module MuxOrigALU(dadoLe2, imediato, OrigALU, saidaMuxALU);
+input [31:0] dadoLe2, imediato;
+input OrigALU;
+output reg[31:0] saidaMuxALU;
+
+always@(*)
+begin
+	case(OrigALU)
+	0:
+	saidaMuxALU = dadoLe2;
+	1:
+	saidaMuxALU = imediato;
+	endcase
+end
+endmodule

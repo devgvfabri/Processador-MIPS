@@ -1,0 +1,47 @@
+// Quartus Prime Verilog Template
+// Single Port ROM
+
+module MemoriaRom
+#(parameter DATA_WIDTH=32, parameter ADDR_WIDTH=32)
+(
+	input [31:0] addr,      // tamanho do endereço vindo do PC
+	input clk,              //clock
+	output [31:0] q     // bits da instrução que saem da memoria
+);
+	integer primeiroClock = 0;
+
+	// Declare the ROM variable
+	reg [31:0] rom[2048:0];
+
+	// Initialize the ROM with $readmemb.  Put the memory contents
+	// in the file single_port_rom_init.txt.  Without this file,
+	// this design will not compile.
+
+	// See Verilog LRM 1364-2001 Section 17.2.8 for details on the
+	// format of this file, or see the "Using $readmemb and $readmemh"
+	// template later in this section.
+
+	/*initial
+	begin
+		$readmemb("rom_init.txt", rom);
+	end
+	*/
+	
+	always @ (posedge clk)
+	begin
+		if(primeiroClock == 0)
+		begin
+			rom[0] = 32'b00110100000000000000000000000000; // nop
+			rom[1] = 32'b00101000010000000000000000000001; // store
+			rom[2] = 32'b00101000100100000100000000000010; // store
+			rom[3] = 32'b00000000000000000100001000000000; // add
+			rom[4] = 32'b00101001001000001000000000000011; // store
+			rom[5] = 32'b00100100001000000000000000000011; // load
+			
+			primeiroClock <= 1; // atribuicao nao bloqueante
+		end
+	end
+	
+	assign q = rom[addr]; // atribuicao continua
+
+endmodule

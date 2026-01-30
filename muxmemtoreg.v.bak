@@ -1,0 +1,16 @@
+module MuxMemToREG(saidaULA, saidaMem, MemToReg, saidaToReg);
+input [31:0] saidaULA, saidaMem;
+input MemToReg;
+output reg[31:0] saidaToReg;
+
+always@(*)
+begin
+	case(MemToReg)
+	0:
+	saidaToReg = saidaULA;
+	1:
+	saidaToReg = saidaMem;
+	endcase
+end
+
+endmodule

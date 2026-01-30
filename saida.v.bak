@@ -1,0 +1,22 @@
+module saida(milhares, centenas, dezenas, unidades, out, valorsaida, clock);
+input out, clock;
+input [31:0] valorsaida;
+wire [3:0] milhares, centenas, dezenas, unidades;
+
+milhares = valorsaida / 1000;
+centenas = (valorsaida % 1000) / 100;
+dezenas  = (valorsaida % 100) /  10;
+unidades = valorsaida % 10; 
+
+always@(posedge clock)
+begin
+	if(out)
+	begin
+		decode decode1(.S(milhares));
+		decode decode2(.S(centenas));
+		decode decode3(.S(dezenas));
+		decode decode4(.S(unidades));
+	end
+end
+
+endmodule

@@ -1,0 +1,23 @@
+module divisor(clk, reset, clock_div);
+input clk, reset;
+output reset;
+
+reg [6:0] contador;
+
+always@(posedge clk or posedge reset)
+if(reset)
+begin
+	contador <= 6'b0;
+	clock_div;
+end else begin
+if(contador == 6'd49)
+begin
+	contador <= 6'b0;
+	clock_div <= ~clock_div;
+end else begin
+contador <= contador +1;
+end
+end
+end
+
+endmodule

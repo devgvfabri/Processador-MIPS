@@ -1,0 +1,27 @@
+module bancoReg(RLe1, RLe2, REscrita, DadoEscrita, clock, EscreveReg, DadoLe1, DadoLe2, DadoRD);
+input wire[5:0] RLe1, RLe2, REscrita;
+input wire[31:0] DadoEscrita;
+input clock, EscreveReg;
+output [31:0] DadoLe1, DadoLe2, DadoRD;
+
+integer primeiroClock = 1;
+
+reg[31:0] rega[63:0];
+always@(posedge clock)
+begin
+	if(primeiroClock==1)
+	begin
+		rega[30] = 0;//registrador zero
+		rega[31] = 0;//registrador $ra
+		primeiroClock <=2;
+	end
+	if(EscreveReg == 1)
+	begin
+	rega[REscrita] = DadoEscrita;
+	end
+end
+assign DadoLe1 = rega[RLe1];
+assign DadoLe2 = rega[RLe2];
+assign DadoRD = rega[REscrita];
+
+endmodule
